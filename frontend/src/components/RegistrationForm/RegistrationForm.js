@@ -7,6 +7,8 @@ import { withRouter } from "react-router-dom";
 function RegistrationForm(props) {
     const [state , setState] = useState({
         username : "",
+        email:"",
+        phone:"",
         password : "",
         confirmPassword: "",
         successMessage: null
@@ -24,6 +26,8 @@ function RegistrationForm(props) {
             const payload={
                 "username":state.username,
                 "password":state.password,
+                "phone":state.phone,
+                "email":state.email,
             }
             axios.post(API_BASE_URL+'/auth/register', payload)
                 .then(function (response) {
@@ -32,8 +36,8 @@ function RegistrationForm(props) {
                             ...prevState,
                             'successMessage' : 'Registration successful. Redirecting to home page..'
                         }))
-                        localStorage.setItem(ACCESS_TOKEN_NAME,response.data.token);
-                        redirectToHome();
+                        // localStorage.setItem(ACCESS_TOKEN_NAME,response.data.token);
+                        redirectToLogin();
                         props.showError(null)
                     } else{
                         props.showError("Some error ocurred");
@@ -47,10 +51,7 @@ function RegistrationForm(props) {
         }
         
     }
-    const redirectToHome = () => {
-        props.updateTitle('Home')
-        props.history.push('/home');
-    }
+   
     const redirectToLogin = () => {
         props.updateTitle('Login')
         props.history.push('/login'); 
@@ -73,7 +74,32 @@ function RegistrationForm(props) {
                        id="username" 
                        aria-describedby="usernameHelp" 
                        placeholder="Enter Username" 
+                       value={state.username}
+                       onChange={handleChange}
+                />
+               
+                </div>
+                <div className="form-group text-left">
+                <label htmlFor="exampleInputEmail2">Email</label>
+                <input type="email" 
+                       className="form-control" 
+                       id="email" 
+                       aria-describedby="emailHelp" 
+                       placeholder="Enter email" 
                        value={state.email}
+                       onChange={handleChange}
+                />
+               
+                </div>
+
+                <div className="form-group text-left">
+                <label htmlFor="phoneNumber">Phone</label>
+                <input type="text" 
+                       className="form-control" 
+                       id="phone" 
+                       aria-describedby="phoneHelp" 
+                       placeholder="Enter phone" 
+                       value={state.phone}
                        onChange={handleChange}
                 />
                

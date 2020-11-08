@@ -5,19 +5,24 @@ const config = require('../config')
 
 const User = new Schema({
     username: String,
+    email: String,
+    phone: String,
     password: String,
     isEmployer: { type: Boolean, default: false }
 })
 
 // create new User document
-User.statics.create = function(username, password) {
+User.statics.create = function(username, password,email,phone) {
     const encrypted = crypto.createHmac('sha1', config.secret)
                       .update(password)
                       .digest('base64')
 
     const user = new this({
         username,
+        email,
+        phone,
         password: encrypted
+        
     })
     
     return user.save()

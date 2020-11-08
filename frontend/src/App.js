@@ -3,7 +3,8 @@ import './App.css';
 import Header from './components/Header/Header';
 import LoginForm from './components/LoginForm/LoginForm';
 import RegistrationForm from './components/RegistrationForm/RegistrationForm';
-import Home from './components/Home/Home';
+import Employee from './components/Employee/Employee';
+import Employer from './components/Employer/Employer';
 import PrivateRoute from './utils/PrivateRoute';
 import {
   BrowserRouter as Router,
@@ -11,6 +12,7 @@ import {
   Route
 } from "react-router-dom";
 import AlertComponent from './components/AlertComponent/AlertComponent';  
+
 function App() {
   const [title, updateTitle] = useState(null);
   const [errorMessage, updateErrorMessage] = useState(null);
@@ -29,8 +31,11 @@ function App() {
             <Route path="/login">
               <LoginForm showError={updateErrorMessage} updateTitle={updateTitle}/>
             </Route>
-            <PrivateRoute path="/home">
-              <Home/>
+            <PrivateRoute path="/employer">
+              <Employer showError={updateErrorMessage} updateTitle={updateTitle}/>
+            </PrivateRoute>
+            <PrivateRoute path="/employee">
+              <Employee showError={updateErrorMessage} updateTitle={updateTitle}/>
             </PrivateRoute>
           </Switch>
           <AlertComponent errorMessage={errorMessage} hideError={updateErrorMessage}/>

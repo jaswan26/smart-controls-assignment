@@ -11,7 +11,7 @@ function Header(props) {
         title = 'Welcome'
     }
     function renderLogout() {
-        if(props.location.pathname === '/home'){
+        if(props.location.pathname === '/employer'||props.location.pathname === '/employee'){
             return(
                 <div className="ml-auto">
                     <button className="btn btn-danger" onClick={() => handleLogout()}>Logout</button>

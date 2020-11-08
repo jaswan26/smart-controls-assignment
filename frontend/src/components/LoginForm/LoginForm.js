@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import axios from 'axios';
 import './LoginForm.css';
-import {API_BASE_URL, ACCESS_TOKEN_NAME} from '../../constants/apiConstants';
+import {API_BASE_URL, ACCESS_TOKEN_NAME,IS_EMPLOYER} from '../../constants/apiConstants';
 import { withRouter } from "react-router-dom";
 
 function LoginForm(props) {
@@ -33,8 +33,17 @@ function LoginForm(props) {
                         'successMessage' : 'Login successful. Redirecting to home page..'
                     }))
                     localStorage.setItem(ACCESS_TOKEN_NAME,response.data.token);
-                    redirectToHome();
-                    props.showError(null)
+                   axios.get(API_BASE_URL+'/auth/check', {headers:{'x-access-token':response.data.token}})
+                   .then((res)=>{
+                   if(res.status ===200){
+                    localStorage.setItem(IS_EMPLOYER,res.data.info.isEmployer);
+                    console.log("inside",res.data.info.isEmployer)
+                   }
+                   res.data.info.isEmployer?redirectToEmployer():redirectToEmployee();
+                   props.showError(null)
+                    
+                   })
+                  
                 }
                 else if(response.code === 204){
                     props.showError("Username and password do not match");
@@ -47,9 +56,14 @@ function LoginForm(props) {
                 console.log(error);
             });
     }
-    const redirectToHome = () => {
-        props.updateTitle('Home')
-        props.history.push('/home');
+    const redirectToEmployer = () => {
+        props.updateTitle('Employer')
+        props.history.push('/employer');
+       
+    }
+    const redirectToEmployee = () => {
+        props.updateTitle('Employee')
+        props.history.push('/employee');
     }
     const redirectToRegister = () => {
         props.history.push('/register'); 

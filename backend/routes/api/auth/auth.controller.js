@@ -2,14 +2,14 @@ const jwt = require('jsonwebtoken')
 const User = require('../../../models/user')
 
 exports.register = (req, res) => {
-    const { username, password } = req.body
+    const { username, password ,email,phone} = req.body
     let newUser = null
 
     const create = (user) => {
         if(user) {
             throw new Error('username exists')
         } else {
-            return User.create(username, password)
+            return User.create(username, password,email,phone)
         }
     }
 

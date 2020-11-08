@@ -42,4 +42,5 @@ const db = mongoose.connection
 db.on('error', console.error)
 db.once('open', ()=>{
     console.log('connected to mongodb server')
+    require("./lib/agenda.js");
 })
