@@ -4,6 +4,7 @@
 1. npm insatll
 2. npm start   (to start the backend express server)
 3. cd frontend  (in another terminal to start forntend)
+3.b npm install  (install dependencies)
 4. npm start  (to start react front end)
 
 The first user registered will be employer by default 
